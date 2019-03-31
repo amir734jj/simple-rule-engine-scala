@@ -1,2 +1,3 @@
 # simple-rule-engine-scala
-Simple rule engine written in Scala
+
+Simple rule engine written in Scala that uses reflection so it is slow ... 
