@@ -5,6 +5,12 @@ Simple rule engine written in Scala that uses reflection so it is slow ...
 Example:
 
 ```scala
+// Simple class definition
+case class Person(name: String, age: Int)
+
+// Create engine instance
+val ruleEngine = new RuleEngine[Rule, Person]()
+
 // Rules need to implement `RuleTrait`
 // Don't worry about using Array of string as values, code will
 // handle type-conversion
