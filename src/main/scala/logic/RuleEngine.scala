@@ -4,8 +4,7 @@ import traits.RuleTrait
 import models.LogicalJoinEnum
 import models.LogicalJoinEnum.{And, Or}
 import models.OperationEnums
-import models.OperationEnums.{Equals, NotEquals}
-
+import models.OperationEnums.{Equals, NotEquals, In, NotIn}
 import scala.reflect.ClassTag
 
 class RuleEngine[TRule <: RuleTrait, TItem <: Object](implicit classTag: ClassTag[TItem]) {
@@ -23,10 +22,29 @@ class RuleEngine[TRule <: RuleTrait, TItem <: Object](implicit classTag: ClassTa
     }
   }
 
-  def operationHandler(operation: OperationEnums.Value)(x: Any)(y: Any) = {
+  def operationHandler(operation: OperationEnums.Value)(fieldValue: Any)(ruleValue: Array[String]) = {
     operation match {
-      case Equals => x == y
-      case NotEquals => x != y
+      case Equals => ruleValue.headOption match {
+        case Some(head) => typeConversion(fieldValue)(head) == fieldValue
+        case None => false
+      }
+      case NotEquals => ruleValue.headOption match {
+        case Some(head) => typeConversion(fieldValue)(head) != fieldValue
+        case None => false
+      }
+      case In => ruleValue.exists(x => typeConversion(fieldValue)(x) == fieldValue)
+      case NotIn => !ruleValue.exists(x => typeConversion(fieldValue)(x) == fieldValue)
+    }
+  }
+
+  def typeConversion(fieldValue: Any)(value: String): Any = {
+    fieldValue match {
+      case _: Short => value.toShort
+      case _: Int => value.toInt
+      case _: Float => value.toFloat
+      case _: Double => value.toDouble
+      case _: Boolean => value.toBoolean
+      case _: String => value
     }
   }
 
