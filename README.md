@@ -26,10 +26,10 @@ val models = Array(
 )
 
 // Create the `Person => Boolean` lambda
-val filter = ruleEngine.build(rules)
+val filterFunc = ruleEngine.build(rules)
 
 // Run the lambda against data
-val result = models.filter(filter)
+val result = models.filter(filterFunc)
 
 // Assert count
 assert(result.length == 1)
