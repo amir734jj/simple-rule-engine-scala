@@ -20,7 +20,10 @@ val rules: Array[Rule] = Array(
 )
 
 // Make some objects
-val models = Array(Person("Test", 123), Person("Not test!", 123))
+val models = Array(
+  Person("Test", 123),
+  Person("Not test!", 123)
+)
 
 // Create the `Person => Boolean` lambda
 val filter = ruleEngine.build(rules)
