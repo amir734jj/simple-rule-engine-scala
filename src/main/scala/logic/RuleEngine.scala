@@ -44,7 +44,7 @@ class RuleEngine[TRule <: RuleTrait, TItem <: Object](implicit classTag: ClassTa
       case _: Float => value.toFloat
       case _: Double => value.toDouble
       case _: Boolean => value.toBoolean
-      case _: String => value
+      case _: String => value.toString
     }
   }
 
